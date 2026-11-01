@@ -8,7 +8,7 @@
 
 ## Checklist
 
-- [ ] `VERSION` bumped (merging into `main` creates the tag `vX.Y.Z` and the release)
+- [ ] On a `release/x.x.x` branch, `VERSION` bumped (merging into `main` creates the tag `vX.Y.Z` and the release)
 - [ ] `./run-tests.sh` ends with `ALL GREEN` (`RUN_E2E=1` when the page changed)
 - [ ] New page text is English (`t('…')` or `data-i18n`) with its line in `PT_BR` in `i18n.js`
 - [ ] Changed `pyproject.toml`? Ran `uv lock` and exported both `requirements*.txt`

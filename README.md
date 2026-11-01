@@ -23,7 +23,9 @@
 
 <br>
 
-<img src="docs/camera-page.png" alt="The page on the camera device: preview, zoom slider, Mirror, Rotate 90°, Fit, Reset, Back and Front camera buttons, lens dropdown, Start streaming and Stop" width="420">
+<img src="docs/demo.gif" alt="Animated demo: the page on a device starts streaming and a video call on the PC shows the LAN Webcam live; zoom, Mirror, Rotate 90°, Fit and Reset on the page change the picture on the PC at once, and Stop leaves it waiting for the camera" width="820">
+
+<sub>Recorded with the real page, TLS and WebSocket server, a simulated camera and a simulated PC app: frames went to the demo, not to <code>/dev/video10</code>.</sub>
 
 </div>
 
@@ -151,7 +153,7 @@ GitHub Actions, in `.github/`:
 | `tests.yml` | push/PR to `main`, manual | unit layers (lint, backend, frontend, launcher), then the E2E with Playwright; the server log is uploaded when the E2E fails |
 | `check-quality.yml` | push/PR to `main` | ruff, ShellCheck, JavaScript syntax, `.sh` files executable in git, actions pinned to a hash, workflow YAML |
 | `codeql-analysis.yml` | push/PR, weekly | CodeQL for Python, JavaScript and the workflows |
-| `auto-complete-fields.yml` | PR opened/updated | assigns the author, labels by commit words and touched files, lists the commits in the PR body (`[...autoGenerate]`), titles it `Release vX.Y.Z - …`, fails if that version was already released |
+| `auto-complete-fields.yml` | PR opened/updated | assigns the author, labels by commit words and touched files, lists the commits in the PR body (`[...autoGenerate]`), titles it `Release vX.Y.Z - …`, fails on a `release/x.x.x` branch if that version was already released |
 | `create-tag-and-release.yml` | PR merged into `main` | creates the tag `vX.Y.Z` from `VERSION` and a GitHub release with the PR text, generated notes, the source tarball and `SHA256SUMS` (a `-rc.1` style version becomes a pre-release) |
 
 `setup-environment` (composite action) sets up Node, creates the venv from `requirements-dev.txt`
@@ -179,7 +181,7 @@ git ls-remote --tags https://github.com/actions/setup-node.git 'v7.1.0^{}' 'v7.1
 
 ### Releasing
 
-1. In the PR, bump `VERSION` (semver: `1.1.0`, or `1.1.0-rc.1` for a pre-release).
+1. In a PR from a `release/x.x.x` branch, bump `VERSION` (semver: `1.1.0`, or `1.1.0-rc.1` for a pre-release).
 2. Merge into `main`. The tag and the release are created on their own.
 
 What the release is built from:
@@ -193,7 +195,8 @@ What the release is built from:
 | Type | a version with `-` (e.g. `1.1.0-rc.1`) is a pre-release; any other becomes "latest" |
 
 If the tag already exists (the PR did not bump `VERSION`), nothing is released and the run leaves a
-warning. The PR check `VERSION is new` catches that before the merge.
+warning. On a `release/x.x.x` branch, the PR check `VERSION is new` catches that before the merge;
+PRs from any other branch skip it, so they can merge without a new version.
 
 Issues use forms (`bug_report.yml`, `feature_request.yml`); PRs start from `pull_request_template.md`.
 
