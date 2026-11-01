@@ -23,6 +23,12 @@
 
 <br>
 
+<img src="docs/demo.gif" alt="Animated demo: the page on a device starts streaming and a video call on the PC shows the LAN Webcam live; zoom, Mirror, Rotate 90°, Fit and Reset on the page change the picture on the PC at once, and Stop leaves it waiting for the camera" width="820">
+
+<sub>Recorded with the real page, TLS and WebSocket server, a simulated camera and a simulated PC app: frames went to the demo, not to <code>/dev/video10</code>.</sub>
+
+<br><br>
+
 <img src="docs/camera-page.png" alt="The page on the camera device: preview, zoom slider, Mirror, Rotate 90°, Fit, Reset, Back and Front camera buttons, lens dropdown, Start streaming and Stop" width="420">
 
 </div>
